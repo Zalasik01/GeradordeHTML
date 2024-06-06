@@ -134,8 +134,8 @@
         </div>
         <textarea id="codeToCopy"></textarea>
     </div>
-    <div id="notification" class="notification"><i class="fas fa-check-circle"></i>Código copiado!</div>
-    <div id="errorNotification" class="error"><i class="fas fa-exclamation-circle"></i>Erro: Link do YouTube inválido!</div>
+    <div id="notification" class="notification"><i class="fas fa-check-circle"></i><span id="notificationMessage">Código copiado!</span></div>
+    <div id="errorNotification" class="error"><i class="fas fa-exclamation-circle"></i><span id="errorMessage">Erro: Link do YouTube inválido!</span></div>
     <audio id="notificationSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
     <script>
         function extractVideoId(url) {
@@ -236,7 +236,8 @@
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             const notificationSound = document.getElementById('notificationSound');
-            notification.textContent = message;
+            const notificationMessage = document.getElementById('notificationMessage');
+            notificationMessage.textContent = message;
             notification.classList.add('show');
             notificationSound.play();
             setTimeout(() => {
@@ -246,7 +247,8 @@
 
         function showError(message) {
             const errorNotification = document.getElementById('errorNotification');
-            errorNotification.textContent = message;
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
             errorNotification.classList.add('show');
             setTimeout(() => {
                 errorNotification.classList.remove('show');
