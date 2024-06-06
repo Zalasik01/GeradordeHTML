@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Código do Vídeo</title>
+    <script src="https://kit.fontawesome.com/558c05e7aa.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon"> <!-- Link para o favicon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-PoGosLpFZRIpG8I0rI0U7X+IGX4Qu1rcxyV7PE2E54v8h8JD5VYsLguk7K4ViR4bAqT5JGw5GO0/sN1QdUXqLQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #084298;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #084298;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+        button:hover {
+            background-color: #0f47ad;
+        }
+        .result-container {
+            margin-top: 20px;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            max-height: 300px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .copy-button {
+            background: #084298;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .copy-button:hover {
+            background: #0f47ad;
+        }
+        textarea {
+            position: absolute;
+            left: -9999px;
+        }
+        .fa-code, .fa-copy {
+            margin-right: 5px;
+        }
+        .notification, .error {
+            padding: 15px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            border-radius: 5px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            transform: translateY(-20px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .notification.show, .error.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .notification {
+            background-color: #A6FFBC;
+            border: 2px #00bd00 solid; 
+            color: #00bd00;
+        }
+        .error {
+            background-color: #FFCACA;
+            border: 2px #a60202 solid; 
+            color: #a60202;
+        }
+        .notification i, .error i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Insira o link do vídeo do YouTube</h2>
+        <input type="text" id="videoLink" placeholder="Cole o link do YouTube aqui">
+        <button onclick="generateCode()"><i class="fas fa-code"></i> Gerar Código</button>
+        <button onclick="copyCode()"><i class="fas fa-copy"></i> Copiar Código</button>
+        <div id="result" class="result-container">
+            <pre id="generatedCode"></pre>
+        </div>
+        <textarea id="codeToCopy"></textarea>
+    </div>
+    <div id="notification" class="notification"><i class="fas fa-check-circle"></i>Código copiado!</div>
+    <div id="errorNotification" class="error"><i class="fas fa-exclamation-circle"></i>Erro: Link do YouTube inválido!</div>
+    <audio id="notificationSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+    <script>
+        function extractVideoId(url) {
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const matches = url.match(regex);
+            return matches ? matches[1] : null;
+        }
+
+        function generateCode() {
+            const videoLink = document.getElementById('videoLink').value;
+            if (!videoLink) {
+                showError("Erro: Link do YouTube inválido!");
+                return;
+            }
+
+            const videoId = extractVideoId(videoLink);
+            if (!videoId) {
+                showError("Erro: Link do YouTube inválido!");
+                return;
+            }
+
+            const embedLink = `https://www.youtube.com/embed/${videoId}`;
+
+            const code = `
+<p>
+    <!-- Documentação sobre criar transcrição dentro dos cursos para adicionar no moodle (U.A) -->
+</p>
+<center>
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="activity-header">
+            <div id="headingOne" class=""
+                style="color: #084298; padding-bottom: 10px;" role="tab">
+                <center>
+                    <h5 class="mb-0" style="margin-top: 15px; padding-top: 13px;"><a
+                            class="collapsed"
+                            style="font-weight: 600; text-decoration: none; color: #0f47ad;"
+                            href="#collapseOne" data-toggle="collapse"
+                            data-parent="#accordion" aria-expanded="false"
+                            aria-controls="collapseOne">Confira <i
+                                class="fa-solid fa-angle-down"></i></a></h5>
+                </center>
+            </div>
+            <div id="collapseOne" class="collapse"
+                style="margin-top: 25px; padding: 0px 0px 9px;" role="tabpanel"
+                aria-labelledby="headingOne">
+                <div class="card-block" style="max-width: 86vh;"> </div>
+            </div>
+        </div>
+        <h3>           <iframe title="Geral - Como cadastrar um Veículo"
+            src="${embedLink}" width="750" height="430"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen="allowfullscreen"></iframe>           </h3>
+    </div>
+</center>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="activity-header">
+        <div id="headingOne" class="" style="color: #084298; padding-bottom: 10px;"
+            role="tab">
+            <center>
+                <h5 class="mb-0" style="margin-top: 15px; padding-top: 13px;"><a
+                        class="collapsed"
+                        style="font-weight: 600; text-decoration: none; color: #0f47ad;"
+                        href="#collapseOne" data-toggle="collapse" data-parent="#accordion"
+                        aria-expanded="false" aria-controls="collapseOne">Clique para Ler a
+                        Transcrição <i class="fa-solid fa-angle-down"></i></a></h5>
+            </center>
+        </div>
+        <div id="collapseOne" class="collapse"
+            style="margin-top: 25px; padding: 0px 0px 9px;" role="tabpanel"
+            aria-labelledby="headingOne">
+            <div class="card-block" style="max-width: 86vh;"> </div>
+        </div>
+    </div>
+</div>
+`;
+
+            document.getElementById('generatedCode').textContent = code.trim();
+            document.getElementById('codeToCopy').value = code.trim();
+            showNotification("Código gerado!", "notification");
+        }
+
+        function copyCode() {
+            const codeToCopy = document.getElementById('codeToCopy');
+            if (!codeToCopy.value) {
+                showError("Erro: Não há código para copiar!");
+                return;
+            }
+            codeToCopy.select();
+            document.execCommand('copy');
+            showNotification("Código copiado!", "notification");
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const notificationSound = document.getElementById('notificationSound');
+            notification.textContent = message;
+            notification.classList.add('show');
+            notificationSound.play();
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function showError(message) {
+            const errorNotification = document.getElementById('errorNotification');
+            errorNotification.textContent = message;
+            errorNotification.classList.add('show');
+            setTimeout(() => {
+                errorNotification.classList.remove('show');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
